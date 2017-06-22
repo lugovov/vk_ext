@@ -17,7 +17,7 @@
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-0123456789";
 
     for( var i=0; i < len; i++ ){
-       if(i==0)
+       if(i===0)
         text.push(possibleFirst.charAt(Math.floor(Math.random() * possibleFirst.length)));
       else
         text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
@@ -30,9 +30,9 @@
     try{
      if(element.toString()=='[object Text]')
        return;
-     run(element,'ads_ad_box',remove)
-     run(element,'_ads_promoted_post_data_w',remove)
-     run(element,'audio_row',audio)
+     run(element,'ads_ad_box',remove);
+     run(element,'_ads_promoted_post_data_w',remove);
+     run(element,'audio_row',audio);
      if(element.className.match(/(^|\s)audio_row(\s|$)/))
       audio(element);
     }catch(e){console.log(e);}
@@ -57,7 +57,7 @@
         aud=JSON.parse(aud.value);
       if(!id)
         id=aud[1]+'_'+aud[0];
-      var title=aud[3].trim()+' - '+aud[4].trim();
+      var title=aud[4].trim()+' - '+aud[3].trim();
       var url;
       if(aud[2])
         url=Promise.resolve(aud[2]);
@@ -69,7 +69,7 @@
           xhr.onload = function(e) {
             if (this.status == 200) {
               var myBlob = this.response;
-              var resp=myBlob.split('<!>')
+              var resp=myBlob.split('<!>');
               resp.forEach(function(txt){
                if(txt.substr(0,7)=='<!json>')
                  try{
@@ -77,19 +77,18 @@
                    if(Array.isArray(info))
                      info.forEach(function(track){
                        if(track[1]+'_'+track[0]==id && track[2]){
-                         title=track[3].trim()+' - '+track[4].trim()
+                         title=track[4].trim()+' - '+track[3].trim();
                          d(track[2]);
                        }
-                     })
+                     });
                  }catch(e){
-                   console.log(e)
-                 };
-              })
-
+                   console.log(e);
+                 }
+              });
             }
           };
-          xhr.send('act=reload_audio&al=1&ids='+id);    
-        })
+          xhr.send('act=reload_audio&al=1&ids='+id);
+        });
       }
         url.then(function(link){
           me.innerHTML=saveText;
@@ -103,20 +102,20 @@
               me.innerHTML=okText;
             }
           };
-          xhr.send();        
-        })
+          xhr.send();
+        });
       return false;
     }catch(e){
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
   var downText='&#8681;';
   var reloadText='&#8986;';
-  var saveText='&#128190;'
+  var saveText='&#128190;';
   var okText='&#10003';
   var audio=function(element){
     try{
-     var exists=element.getElementsByClassName(className).length>0
+     var exists=element.getElementsByClassName(className).length>0;
      if(exists)
        return true;
      var title=element.getElementsByClassName('audio_row__performer_title');
@@ -134,15 +133,15 @@
     a.onclick=download;
     element.appendChild(a);
     }catch(e){console.log(e);}
-  }
+  };
   var observer;
   observer&&observer.disconnect();
   observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(element){
-      element.addedNodes.forEach(updateContent)
+      element.addedNodes.forEach(updateContent);
     });
   });
   observer.observe(document.body, { childList: true, subtree:true });
   updateContent(document.body);
 
-})()
+})();
