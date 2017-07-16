@@ -145,5 +145,7 @@
   });
   observer.observe(document.body, { childList: true, subtree:true });
   updateContent(document.body);
-
+    var style=document.createElement('style');
+    style.innerHTML='#ads_left{opacity:0;visibility: hidden;}';
+    document.head.appendChild(style);
 })();
