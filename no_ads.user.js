@@ -2,7 +2,7 @@
 // @name        no ads & music download
 // @namespace   vk_downloader
 // @include     https://vk.com/*
-// @version     1.0.2
+// @version     1.0.3
 // @updateURL	https://github.com/lugovov/vk_ext/raw/master/no_ads.user.js
 // @grant       none
 // @noframes
@@ -26,7 +26,50 @@
     return text.join('');
   };
   var className=makeid(16+Math.ceil(Math.random()*16));
-
+    var getLink=function(t){
+	if ( t.indexOf("audio_api_unavailable")) {
+        var s= "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN0PQRSTUVWXYZO123456789+/=",
+        r = {
+                    v: function (t) {
+                        return t.split("").reverse().join("")
+                    },
+                    r: function (t, e) {
+                        t = t.split("");
+                        for (var i, o = s + s, a = t.length; a--; )
+                            i = o.indexOf(t[a]), ~i && (t[a] = o.substr(i - e, 1));
+                        return t.join("")
+                    },
+                    x: function (t, e) {
+                        var i = [];
+                        return e = e.charCodeAt(0),
+                        each(t.split(""), function (t, o) {
+                            i.push(String.fromCharCode(o.charCodeAt(0) ^ e))
+                        }),
+                        i.join("")
+                    }
+                };
+                var a=function(t) {
+                    if (!t || t.length % 4 == 1)
+                        return !1;
+                    for (var e, i, o = 0, a = 0, r = ""; i = t.charAt(a++); )
+                        i = s.indexOf(i), ~i && (e = o % 4 ? 64 * e + i : i, o++ % 4) && (r += String.fromCharCode(255 & e >> (-2 * o & 6)));
+                    return r;
+                };
+				var e = t.split("?extra=")[1].split("#"),
+				    o = a(e[1]);
+				if (e = a(e[0]), !o || !e)
+					return t;
+				o = o.split(String.fromCharCode(9));
+				for (var s, l, n = o.length; n--; ) {
+					if (l = o[n].split(String.fromCharCode(11)), s = l.splice(0, 1, e)[0], !r[s])
+						return t
+					e = r[s].apply(null, l)
+				};
+				if (e && "http" === e.substr(0, 4))
+					return e;
+			};
+			return t
+};
   var updateContent=function(element){
     try{
      if(element.toString()=='[object Text]')
@@ -80,7 +123,7 @@
                      info.forEach(function(track){
                        if(track[1]+'_'+track[0]==id && track[2]){
                          title=track[4].trim()+' - '+track[3].trim();
-                         d(track[2]);
+                         d(getLink(track[2]));
                        }
                      });
                  }catch(e){
