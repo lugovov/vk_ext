@@ -25,7 +25,7 @@
     }
     return text.join('');
   };
-	var vk={}
+	var vk={};
 	
 	(function(t, e) {
 	"use strict";
