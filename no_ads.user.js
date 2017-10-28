@@ -2,7 +2,7 @@
 // @name        no ads & music download
 // @namespace   vk_downloader
 // @include     https://vk.com/*
-// @version     1.0.3
+// @version     1.0.4
 // @updateURL	https://github.com/lugovov/vk_ext/raw/master/no_ads.user.js
 // @grant       none
 // @noframes
