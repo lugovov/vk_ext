@@ -25,7 +25,7 @@
     }
     return text.join('');
   };
-	#from kenzo_vk https://github.com/icw82/kenzo-vk/blob/master/sources/ext/modules/audio/vk.js
+	//from kenzo_vk https://github.com/icw82/kenzo-vk/blob/master/sources/ext/modules/audio/vk.js
 	const check_url = source => {
         const map =
             'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN0PQRSTUVWXYZO123456789+/=';
